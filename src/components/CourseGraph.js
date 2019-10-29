@@ -1,6 +1,7 @@
 import React from "react";
 import {Graph} from "react-d3-graph";
 import data from "../course_data.json"
+import graphConfig from "./graph_config.json"
 
 class CourseGraph extends React.Component {
 	constructor(props) {
@@ -67,62 +68,8 @@ class CourseGraph extends React.Component {
 		const code = this.props.activeCourse;
 		const graphData = this.buildGraph(code, "recommended_courses");
 
-		const graphConfig = {
-		  "width": this.props.width,
-		  "height": this.props.height,
-		  "automaticRearrangeAfterDropNode": true,
-		  "collapsible": true,
-		  "directed": true,
-		  "focusAnimationDuration": 0.75,
-		  "focusZoom": 1,
-		  "highlightDegree": 2,
-		  "highlightOpacity": 0.2,
-		  "linkHighlightBehavior": true,
-		  "maxZoom": 12,
-		  "minZoom": 0.05,
-		  "nodeHighlightBehavior": true,
-		  "panAndZoom": false,
-		  "staticGraph": false,
-		  "staticGraphWithDragAndDrop": false,
-		  "d3": {
-		    "gravity": -250,
-		    "linkLength": 120,
-		    "linkStrength": 2
-		  },
-		  "node": {
-		    "color": "#d3d3d3",
-		    "fontColor": "black",
-		    "fontSize": 10,
-		    "fontWeight": "normal",
-		    "highlightColor": "red",
-		    "highlightFontSize": 14,
-		    "highlightFontWeight": "bold",
-		    "highlightStrokeColor": "red",
-		    "highlightStrokeWidth": 1.5,
-		    "mouseCursor": "crosshair",
-		    "renderLabel": true,
-		    "size": 400,
-		    "strokeColor": "none",
-		    "strokeWidth": 1.5,
-		    "svg": "",
-		    "symbolType": "circle"
-		  },
-		  "link": {
-		    "color": "lightgray",
-		    "fontColor": "black",
-		    "fontSize": 8,
-		    "fontWeight": "normal",
-		    "highlightColor": "red",
-		    "highlightFontSize": 8,
-		    "highlightFontWeight": "normal",
-		    "labelProperty": "label",
-		    "mouseCursor": "pointer",
-		    "opacity": 1,
-		    "renderLabel": false,
-		    "semanticStrokeWidth": true,
-		    "strokeWidth": 3
-		  }
-		};
+		graphConfig.width = this.props.width;
+		graphConfig.height = this.props.height;
 
 		let content = null;
 
