@@ -9,6 +9,7 @@ import networkx as nx
 from create_courses import create_courses
 import webbrowser
 
+
 def add_graph_nodes(graph, course):
     """
         Recursively builds a graph of recommended course dependencies
@@ -58,13 +59,13 @@ def add_graph_nodes(graph, course):
 
     recurse_nodes(graph, course)
 
-if __name__ == "__main__":
-    COURSES = create_courses("course_data.p")
+def display_course_graph():
+    courses = create_courses("course_data.p")
 
     # Build the graph
-    GRAPH = nx.MultiDiGraph()
-    CURRENT_COURSE = COURSES[sys.argv[1]]
-    add_graph_nodes(GRAPH, CURRENT_COURSE)
+    graph = nx.MultiDiGraph(editable=True)
+    current_courses = courses[sys.argv[1]]
+    add_graph_nodes(graph, current_courses)
 
     # Layout the course nodes
     node_x = []
@@ -77,7 +78,7 @@ if __name__ == "__main__":
     max_x = 0
 
     # Do y positions first. We also count how many nodes there are on each level here
-    for node in GRAPH.nodes():
+    for node in graph.nodes():
         node_y.append(node[2])
 
         if not node[2] in level_x:
@@ -90,7 +91,7 @@ if __name__ == "__main__":
         node_course_names.append(node[1])
 
     level_progress = {}
-    for node in GRAPH.nodes():
+    for node in graph.nodes():
         if not node[2] in level_progress:
             level_progress[node[2]] = 0
 
@@ -110,54 +111,54 @@ if __name__ == "__main__":
     edge_y = []
     edge_info = []
 
-    for edge in GRAPH.edges():
+    for edge in graph.edges():
         y0 = edge[0][2]
         y1 = edge[1][2]
 
         x0 = x_positions[edge[0][0]]
         x1 = x_positions[edge[1][0]]
-        #print(f"{x0} {y0} -> {x1} {y1}")
+        # print(f"{x0} {y0} -> {x1} {y1}")
 
         edge_x.extend([x0, x1, None])
         edge_y.extend([y0, y1, None])
         edge_info.append(f"{edge[0][2]} -> {edge[1][2]}")
 
     node_trace = go.Scatter(
-        x = node_x,
-        y = node_y,
+        x=node_x,
+        y=node_y,
         showlegend=False,
-        text = node_labels,
-        hoverinfo = "text",
-        hovertext = node_course_names,
-        mode = "markers+text",
-        textposition = "middle center",
-        textfont = dict(
-            family = "arial",
-            size = 18
+        text=node_labels,
+        hoverinfo="text",
+        hovertext=node_course_names,
+        mode="markers+text",
+        textposition="middle center",
+        textfont=dict(
+            family="arial",
+            size=18
         ),
-        marker = dict(
-            size = 100,
+        marker=dict(
+            size=90,
             color="#B2DB67"
         )
     )
 
     edge_trace = go.Scatter(
-        x = edge_x,
-        y = edge_y,
+        x=edge_x,
+        y=edge_y,
         showlegend=False,
         mode="lines",
-        line=dict(width = 5, color = "#888")
+        line=dict(width=5, color="#888")
     )
 
     layout = go.Layout(
-        xaxis = dict(
+        xaxis=dict(
             showgrid=False,
             zeroline=False,
             showline=False,
             ticks='',
             showticklabels=False
         ),
-        yaxis = dict(
+        yaxis=dict(
             showgrid=False,
             zeroline=False,
             showline=False,
@@ -168,7 +169,10 @@ if __name__ == "__main__":
 
     fig = go.Figure(
         data=[edge_trace, node_trace],
-        layout = layout
+        layout=layout
     )
 
     py.plot(fig)
+
+if __name__ == "__main__":
+    display_course_graph()
