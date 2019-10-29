@@ -1,7 +1,7 @@
 import React from "react";
 import {Graph} from "react-d3-graph";
-import data from "../course_data.json"
-import graphConfig from "./graph_config.json"
+import data from "../config/course_data.json"
+import graphConfig from "../config/graph_config.json"
 
 class CourseGraph extends React.Component {
 	constructor(props) {

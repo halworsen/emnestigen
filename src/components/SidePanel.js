@@ -1,5 +1,5 @@
 import React from 'react';
-import data from "../course_data.json"
+import data from "../config/course_data.json"
 
 function CourseInput(props) {
 	return (
