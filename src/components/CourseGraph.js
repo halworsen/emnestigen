@@ -17,6 +17,11 @@ class CourseGraph extends React.Component {
 		// Colors for different "depths" of course dependencies
 		this.depthColor = ["#0094FF", "#FFD800", "#FF0000", "#808080"];
 
+		// The depth at which the graph builder stops
+		// This is to prevent crashes when building cyclic graphs (they exist in the dataset!)
+		// I highly doubt any one course ultimately depends on more than 50 courses
+		this.depthCutoff = 50;
+
 		this.graph = React.createRef();
 	}
 
@@ -27,8 +32,14 @@ class CourseGraph extends React.Component {
 			links: []
 		};
 
+		let original_code = course_code;
+
 		let generated_data = [];
 		let recursiveBuild = function(graph_data, code, data_key, depth) {
+			if(depth > this.depthCutoff) {
+				return false;
+			}
+
 			if(!data[code]) {
 				return false;
 			}
