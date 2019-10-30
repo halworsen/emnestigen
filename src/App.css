@@ -41,7 +41,7 @@ hr {
 
   border-radius: 0 0 1rem 0;
 
-  background-color: #ecf0f1;
+  background-color: rgba(236, 240, 241, 0);
 }
 
 .titleBox {
@@ -50,6 +50,7 @@ hr {
 
 .infoBox {
   padding: .5rem;
+  margin-top: .5rem;
 }
 
 .courseInputForm {
@@ -64,7 +65,7 @@ hr {
   resize: none;
   padding: 0;
 
-  background-color: #ecf0f1;
+  background-color: rgba(236, 240, 241, 0);
   font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 2em;
   font-weight: bold;
