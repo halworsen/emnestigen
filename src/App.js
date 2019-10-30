@@ -25,13 +25,11 @@ class App extends React.Component {
         });
     }
 
-    onNodeSelected(node) {
-        const course_code = node.id;
-
+    onNodeSelected(nodeId) {
         this.setState({
             width: this.state.width,
             height: this.state.height,
-            activeCourse: course_code
+            activeCourse: nodeId
         })
     }
 
@@ -52,9 +50,9 @@ class App extends React.Component {
         const graphWidth = this.state.width;
 
         return (
-            <div className="appContainer">
-                <SidePanel activeCourse={this.state.activeCourse} onSearch={(event) => this.onSearchUpdate(event)}/>
-                <CourseGraph width={graphWidth} height={this.state.height} activeCourse={this.state.activeCourse} onClickNode={(node) => this.onNodeSelected(node)}/>
+            <div key="appContainer" className="appContainer">
+                <SidePanel key="sidePanel" activeCourse={this.state.activeCourse} onSearch={(event) => this.onSearchUpdate(event)}/>
+                <CourseGraph key="courseGraph" width={graphWidth} height={this.state.height} activeCourse={this.state.activeCourse} onClickNode={(node) => this.onNodeSelected(node)}/>
             </div>
         );
     }
