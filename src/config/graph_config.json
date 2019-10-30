@@ -15,8 +15,8 @@
   "staticGraphWithDragAndDrop": false,
   "d3": {
     "alphaTarget": 0.05,
-    "gravity": -800,
-    "linkLength": 150,
+    "gravity": -2000,
+    "linkLength": 100,
     "linkStrength": 1
   },
   "node": {
@@ -37,8 +37,8 @@
     "symbolType": "circle"
   },
   "link": {
-    "color": "#d3d3d3",
     "opacity": 1,
+    "mouseCursor": "auto",
     "renderLabel": false,
     "semanticStrokeWidth": false,
     "strokeWidth": 1.5

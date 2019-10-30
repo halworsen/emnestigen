@@ -26,16 +26,14 @@ class CourseGraph extends React.Component {
 	}
 
 	// Recursively build graph data
-	buildGraph(course_code, data_key) {
+	buildGraph(course_code, linking_data) {
 		let graph_data = {
 			nodes: [],
 			links: []
 		};
 
-		let original_code = course_code;
-
 		let generated_data = [];
-		let recursiveBuild = function(graph_data, code, data_key, depth) {
+		let recursiveBuild = function(graph_data, code, linking_data, depth=0) {
 			if(depth > this.depthCutoff) {
 				return false;
 			}
@@ -57,29 +55,53 @@ class CourseGraph extends React.Component {
 				generated_data.push(code);
 			}
 
-			for(var index in data[code][data_key]) {
-				const other_code = data[code][data_key][index];
+			for(var data_index in linking_data) {
+				const info = linking_data[data_index];
 
-				let success = recursiveBuild(graph_data, other_code, data_key, depth+1);
-				
-				const link_key = code+","+other_code;
-				if(success && !generated_data.includes(link_key)) {
-					graph_data.links.push({source: code, target: other_code, strokeWidth: 3});
-					generated_data.push(link_key);
+				const data_key = info.key;
+				const custom_config = info.custom_config
+
+				for(var index in data[code][data_key]) {
+					const other_code = data[code][data_key][index];
+
+					let success = recursiveBuild(graph_data, other_code, linking_data, depth+1);
+					
+					const link_key = code+","+other_code;
+					if(success && !generated_data.includes(link_key)) {
+						const base_data = {
+							source: code,
+							target: other_code,
+							strokeWidth: 3
+						};
+
+						let link_data = Object.assign({}, base_data, custom_config);
+
+						graph_data.links.push(link_data);
+						generated_data.push(link_key);
+					}
 				}
 			}
 
 			return true;
 		}.bind(this);
 
-		recursiveBuild(graph_data, course_code, data_key, 0);
+		recursiveBuild(graph_data, course_code, linking_data);
 
 		return graph_data;
 	}
 
 	render() {
 		const code = this.props.activeCourse;
-		const graphData = this.buildGraph(code, "recommended_courses");
+		const graphData = this.buildGraph(code, [
+		{
+				key: "required_courses",
+				custom_config: {color: "#ff0000"}
+			},
+			{
+				key: "recommended_courses",
+				custom_config: {}
+			}
+		]);
 
 		graphConfig.width = this.props.width;
 		graphConfig.height = this.props.height;
