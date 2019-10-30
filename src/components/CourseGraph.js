@@ -108,7 +108,7 @@ class CourseGraph extends React.Component {
 
 		let content = null;
 
-		// Early return if the graph wasn't generated
+		// Only display the graph if its graph data was generated (which it will be if the raw data exists)
 		if(data[code]) {
 			content = (<Graph ref={this.graph}
 				id="course-dependencies"
