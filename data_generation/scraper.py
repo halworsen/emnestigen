@@ -7,7 +7,9 @@ import re
 import requests
 from bs4 import BeautifulSoup as BS
 
-from scraper_exceptions import *
+# Thrown by the scraper when it fails to parse the master list of all courses
+class CourseListParseError(Exception):
+    pass
 
 class CourseScraper:
     """
