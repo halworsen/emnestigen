@@ -19,7 +19,6 @@ function CourseInput(props) {
 
 class SidePanel extends React.Component {
 	render() {
-		let course_data_content;
 		let req_content;
 		let rec_content;
 		let course_name = " ";
