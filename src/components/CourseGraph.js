@@ -93,7 +93,7 @@ class CourseGraph extends React.Component {
 	render() {
 		const code = this.props.activeCourse;
 		const graphData = this.buildGraph(code, [
-		{
+			{
 				key: "required_courses",
 				custom_config: {color: "#ff0000"}
 			},
