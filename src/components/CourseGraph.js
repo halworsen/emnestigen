@@ -13,9 +13,11 @@ class CourseGraph extends React.Component {
 
 		// For both of these, any depth equal to or beyond the length of the list will use the last element
 		// Sizes for different "depths" of course dependencies
-		this.depthSize = [2000, 1200, 800, 400]
+		this.depthSize = [2000, 1200, 800, 400];
 		// Colors for different "depths" of course dependencies
-		this.depthColor = ["#0094FF", "#FFD800", "#FF0000", "#808080"]
+		this.depthColor = ["#0094FF", "#FFD800", "#FF0000", "#808080"];
+
+		this.graph = React.createRef();
 	}
 
 	// Recursively build graph data
@@ -51,7 +53,7 @@ class CourseGraph extends React.Component {
 				
 				const link_key = code+","+other_code;
 				if(success && !generated_data.includes(link_key)) {
-					graph_data.links.push({source: code, target: other_code});
+					graph_data.links.push({source: code, target: other_code, strokeWidth: 3});
 					generated_data.push(link_key);
 				}
 			}
@@ -75,11 +77,12 @@ class CourseGraph extends React.Component {
 
 		// Early return if the graph wasn't generated
 		if(data[code]) {
-			content = (<Graph
+			content = (<Graph ref={this.graph}
 				id="course-dependencies"
 				data={graphData}
 				config={graphConfig}
 				onClickNode={this.props.onClickNode}
+				onDoubleClickNode={() => this.graph.current.resetNodesPositions()}
 			/>);
 		}
 
