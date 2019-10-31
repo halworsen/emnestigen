@@ -1,7 +1,9 @@
 import React from "react";
 import {Graph} from "react-d3-graph";
 import data from "../data/course_data.json"
+
 import graphConfig from "../config/graph_config.json"
+import appConfig from "../config/emnestigen_config.json"
 
 class CourseGraph extends React.Component {
 	constructor(props) {
@@ -11,16 +13,10 @@ class CourseGraph extends React.Component {
 			chosen_course: ""
 		};
 
-		// For both of these, any depth equal to or beyond the length of the list will use the last element
-		// Sizes for different "depths" of course dependencies
-		this.depthSize = [2000, 1200, 800, 400];
-		// Colors for different "depths" of course dependencies
-		this.depthColor = ["#0094FF", "#FFD800", "#FF0000", "#808080"];
-
 		// The depth at which the graph builder stops
 		// This is to prevent crashes when building cyclic graphs (they exist in the dataset!)
-		// I highly doubt any one course ultimately depends on more than 50 courses
-		this.depthCutoff = 50;
+		// I highly doubt any one course ultimately depends on more than 10 courses
+		this.depthCutoff = 10;
 
 		this.graph = React.createRef();
 	}
@@ -31,6 +27,9 @@ class CourseGraph extends React.Component {
 			nodes: [],
 			links: []
 		};
+
+		const colors = appConfig.nodes.depthColors;
+		const sizes = appConfig.nodes.depthSizes;
 
 		let generated_data = [];
 		let recursiveBuild = function(graph_data, code, linking_data, depth=0) {
@@ -44,8 +43,8 @@ class CourseGraph extends React.Component {
 
 			// Add a node to the graph if it isn't already in the graph
 			if(!generated_data.includes(code)) {
-				const nodeSize = this.depthSize[Math.min(depth, this.depthSize.length-1)];
-				const nodeColor = this.depthColor[Math.min(depth, this.depthColor.length-1)];
+				const nodeSize = sizes[Math.min(depth, sizes.length-1)];
+				const nodeColor = colors[Math.min(depth, colors.length-1)];
 
 				graph_data.nodes.push({
 					id: code,
@@ -55,6 +54,9 @@ class CourseGraph extends React.Component {
 				generated_data.push(code);
 			}
 
+			// Go through each data key to build the graph by,
+			// recursively adding new nodes and links to the graph
+			// with the custom link configurations
 			for(var data_index in linking_data) {
 				const info = linking_data[data_index];
 
@@ -95,11 +97,11 @@ class CourseGraph extends React.Component {
 		const graphData = this.buildGraph(code, [
 			{
 				key: "required_courses",
-				custom_config: {color: "#ff0000"}
+				custom_config: {color: appConfig.link.requiredColor}
 			},
 			{
 				key: "recommended_courses",
-				custom_config: {}
+				custom_config: {color: appConfig.link.recommendedColor}
 			}
 		]);
 
@@ -110,6 +112,7 @@ class CourseGraph extends React.Component {
 
 		// Only display the graph if its graph data was generated (which it will be if the raw data exists)
 		if(data[code]) {
+			console.log("fugue!")
 			content = (<Graph ref={this.graph}
 				id="course-dependencies"
 				data={graphData}

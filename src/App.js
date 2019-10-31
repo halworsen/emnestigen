@@ -4,6 +4,8 @@ import './App.css';
 import CourseGraph from "./components/CourseGraph.js"
 import InfoPanel from "./components/InfoPanel.js"
 
+import appConfig from "./config/emnestigen_config.json"
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -47,12 +49,36 @@ class App extends React.Component {
     }
 
     render() {
-        const graphWidth = this.state.width;
-
         return (
             <div key="appContainer" className="appContainer">
-                <InfoPanel key="infoPanel" activeCourse={this.state.activeCourse} onSearch={(event) => this.onSearchUpdate(event)}/>
-                <CourseGraph key="courseGraph" width={graphWidth} height={this.state.height} activeCourse={this.state.activeCourse} onClickNode={(node) => this.onNodeSelected(node)}/>
+                <InfoPanel
+                    key="infoPanel"
+                    activeCourse={this.state.activeCourse}
+                    onSearch={(event) => this.onSearchUpdate(event)}
+                />
+
+                <CourseGraph
+                    key="courseGraph"
+                    width={this.state.width}
+                    height={this.state.height}
+                    activeCourse={this.state.activeCourse}
+                    onClickNode={(node) => this.onNodeSelected(node)}
+                />
+
+                <div className="about">
+                    <p>
+                        {appConfig.aboutBlurb ? appConfig.aboutBlurb : "Appen ble ikke konfigurert riktig 😢"}
+                        <span> | </span>
+                        <a
+                            className="ghLink"
+                            href={appConfig.repository_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            GitHub
+                        </a>
+                    </p>
+                </div>
             </div>
         );
     }

@@ -1,6 +1,8 @@
 * {
   padding: 0;
   margin: 0;
+
+  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 html, body, #root {
@@ -36,12 +38,14 @@ hr {
 .infoPanel {
   position: absolute;
 
-  width: 30em;
+  width: 30rem;
   padding: 2rem;
 
   border-radius: 0 0 1rem 0;
 
   background-color: rgba(236, 240, 241, 0);
+
+  pointer-events: none;
 }
 
 .titleBox {
@@ -57,6 +61,8 @@ hr {
   width: 30rem;
   max-width: 30rem;
   margin: 0;
+
+  pointer-events: visible;
 }
 
 .courseInputTextArea {
@@ -66,7 +72,6 @@ hr {
   padding: 0;
 
   background-color: rgba(236, 240, 241, 0);
-  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 2em;
   font-weight: bold;
 
@@ -76,4 +81,26 @@ hr {
 .infoTitleName {
   font-style: italic;
   color: #494949;
+}
+
+.about {
+  position: absolute;
+  left: .5rem;
+  bottom: .5rem;
+
+  color: #494949;
+  font-size: .7em;
+
+  pointer-events: none;
+}
+
+.ghLink {
+  color: #494949;
+  text-decoration: none;
+
+  pointer-events: visible;
+}
+
+.ghLink:hover {
+  text-decoration: underline;
 }

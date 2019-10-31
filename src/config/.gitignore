@@ -1,1 +1,2 @@
-!graph_config.json
+*.json
+!example/*

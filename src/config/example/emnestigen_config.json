@@ -1,0 +1,12 @@
+{
+	"repository_url": "https://github.com/halworsen/emnestigen",
+	"aboutBlurb": "Laga med ekte ❤️ av halworsen",
+	"nodes": {
+		"depthColors": ["#0094ff", "#ffd800", "#ff0000", "#808080"],
+		"depthSizes": [2000, 1200, 800, 400]
+	},
+	"link": {
+		"requiredColor": "#ff0000",
+		"recommendedColor": "#d3d3d3"
+	}
+}

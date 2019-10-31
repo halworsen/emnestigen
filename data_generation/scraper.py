@@ -222,14 +222,14 @@ class CourseScraper:
         print("Scraping course list...")
         self.scrape_course_list()
         print(f"Successfully fetched {len(self.course_info)} courses.")
-        print("Scraping information about each course, this will take a while...")
+        print("Scraping information about each course. This will take a long time!")
 
         # Now scrape info from every single course
         progress = 0
         goal = len(self.course_info)
         for code in self.course_info.keys():
             progress += 1
-            print(f"Scraping info about {code} in ({round((progress / goal) * 100, 1)}%)")
+            print(f"Scraping info about {code} ({round((progress / goal) * 100, 1)}%)")
             self.scrape_course(code)
 
         # Store the scraped data in a JSON file
