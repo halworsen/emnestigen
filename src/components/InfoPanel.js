@@ -1,5 +1,5 @@
 import React from 'react';
-import data from "../config/course_data.json"
+import data from "../data/course_data.json"
 
 function CourseInput(props) {
 	return (
@@ -17,7 +17,7 @@ function CourseInput(props) {
 	);
 }
 
-class SidePanel extends React.Component {
+class InfoPanel extends React.Component {
 	render() {
 		let req_content;
 		let rec_content;
@@ -53,12 +53,12 @@ class SidePanel extends React.Component {
 
 		return (
 			<div
-				key="sidePanelContainer"
-				className="sidePanel"
+				key="infoPanelContainer"
+				className="infoPanel"
 			>
 				<hr/>
 				<div
-					key="sidePanelTitleBox"
+					key="infoPanelTitleBox"
 					className="titleBox"
 				>	
 					<CourseInput key="courseInput" value={this.props.activeCourse} onChange={this.props.onSearch}/>
@@ -66,7 +66,7 @@ class SidePanel extends React.Component {
 				</div>
 				<hr/>
 				<div
-					key="sidePanelInfoBox"
+					key="infoPanelInfoBox"
 					className="infoBox"
 				>
 					{req_content}
@@ -77,4 +77,4 @@ class SidePanel extends React.Component {
 	}
 }
 
-export default SidePanel;
+export default InfoPanel;

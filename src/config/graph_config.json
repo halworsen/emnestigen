@@ -15,7 +15,7 @@
   "staticGraphWithDragAndDrop": false,
   "d3": {
     "alphaTarget": 0.05,
-    "gravity": -2000,
+    "gravity": -800,
     "linkLength": 100,
     "linkStrength": 1
   },

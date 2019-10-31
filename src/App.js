@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 import CourseGraph from "./components/CourseGraph.js"
-import SidePanel from "./components/SidePanel.js"
+import InfoPanel from "./components/InfoPanel.js"
 
 class App extends React.Component {
     constructor(props) {
@@ -51,7 +51,7 @@ class App extends React.Component {
 
         return (
             <div key="appContainer" className="appContainer">
-                <SidePanel key="sidePanel" activeCourse={this.state.activeCourse} onSearch={(event) => this.onSearchUpdate(event)}/>
+                <InfoPanel key="infoPanel" activeCourse={this.state.activeCourse} onSearch={(event) => this.onSearchUpdate(event)}/>
                 <CourseGraph key="courseGraph" width={graphWidth} height={this.state.height} activeCourse={this.state.activeCourse} onClickNode={(node) => this.onNodeSelected(node)}/>
             </div>
         );
