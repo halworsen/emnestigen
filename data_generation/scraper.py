@@ -176,7 +176,7 @@ class CourseScraper:
             # Find what knowledge is REQUIRED
             required_knowledge = soup.find("p", "content-required-knowledge")
             if required_knowledge:
-                blurb = required_knowledge.text.replace("\n", " ")
+                blurb = required_knowledge.get_text(separator=" ")
                 course_info["required_knowledge"] = blurb
 
                 required_courses = self.mentioned_courses(blurb, [course_code])
@@ -187,7 +187,7 @@ class CourseScraper:
             # Find what knowledge is recommended
             recommended_knowledge = soup.find("p", "content-recommended-knowledge")
             if recommended_knowledge:
-                blurb = recommended_knowledge.text.replace("\n", " ")
+                blurb = recommended_knowledge.get_text(separator=" ")
                 course_info["recommended_knowledge"] = blurb
 
                 recommended_courses = self.mentioned_courses(blurb, [course_code])
