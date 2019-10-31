@@ -104,3 +104,7 @@ hr {
 .ghLink:hover {
   text-decoration: underline;
 }
+
+text {
+  pointer-events: none;
+}
