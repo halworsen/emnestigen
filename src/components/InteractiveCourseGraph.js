@@ -44,7 +44,10 @@ class InteractiveCourseGraph extends React.Component {
 	}
 
 	addGraphNode(graphData, code, depth, max_depth) {
-		const depthFraction = depth/max_depth;
+		let depthFraction = 0;
+		if(max_depth > 0) {
+			depthFraction = depth / max_depth;
+		}
 
 		const startColor = appConfig.interactiveGraph.nodes.startColor;
 		const endColor = appConfig.interactiveGraph.nodes.endColor;

@@ -21,7 +21,7 @@ class InfoPanel extends React.Component {
 	render() {
 		let req_content;
 		let rec_content;
-		let course_name = " ";
+		let course_name = "";
 
 		const course_data = data[this.props.activeCourse];
 

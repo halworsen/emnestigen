@@ -12,16 +12,28 @@ class App extends React.Component {
         this.state = {
             width: 0,
             height: 0,
+            graphType: "D3G",
             activeCourse: ""
         };
 
         this.updateSize = this.updateSize.bind(this);
     }
 
+    toggleGraphType() {
+        const newType = (this.state.graphType === "D3G") ? "GV" : "D3G";
+        this.setState({
+            width: this.state.width,
+            height: this.state.height,
+            graphType: newType,
+            activeCourse: this.state.activeCourse
+        })
+    }
+
     onSearchUpdate(event) {
         this.setState({
             width: this.state.width,
             height: this.state.height,
+            graphType: this.state.graphType,
             activeCourse: event.target.value.toUpperCase()
         });
     }
@@ -30,6 +42,7 @@ class App extends React.Component {
         this.setState({
             width: this.state.width,
             height: this.state.height,
+            graphType: this.state.graphType,
             activeCourse: nodeId
         })
     }
@@ -48,6 +61,29 @@ class App extends React.Component {
     }
 
     render() {
+        let graph;
+
+        if(this.state.graphType === "D3G") {
+            graph = (
+                <InteractiveCourseGraph
+                    key="courseGraph"
+                    activeCourse={this.state.activeCourse}
+                    width={this.state.width}
+                    height={this.state.height}
+                    onClickNode={(id) => this.onNodeSelected(id)}
+                />
+            );
+        } else if(this.state.graphType === "GV") {
+            graph = (
+                <GVCourseGraph
+                    key="courseGraph"
+                    activeCourse={this.state.activeCourse}
+                    width={this.state.width}
+                    height={this.state.height}
+                />
+            );
+        }
+
         return (
             <div key="appContainer" className="appContainer">
                 <InfoPanel
@@ -56,14 +92,14 @@ class App extends React.Component {
                     onSearch={(event) => this.onSearchUpdate(event)}
                 />
 
-                <InteractiveCourseGraph
-                    key="courseGraph"
-                    activeCourse={this.state.activeCourse}
-                    width={this.state.width}
-                    height={this.state.height}
-                    onClickNode={(id) => this.onNodeSelected(id)}
-                />
+                {graph}
 
+                <div
+                    className="graphToggler"
+                    onClick={() => this.toggleGraphType()}
+                >
+                    <p>{this.state.graphType}</p>
+                </div>
 
                 <div className="about">
                     <p>
