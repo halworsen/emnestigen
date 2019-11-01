@@ -83,7 +83,7 @@ class App extends React.Component {
                     className="gvGraph"
                     activeCourse={this.state.activeCourse}
                     width={this.state.width}
-                    height={this.state.height}
+                    height={this.state.height * 0.95}
                 />
             );
         }
