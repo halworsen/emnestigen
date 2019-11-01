@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/emnestigen/precache-manifest.55939823bd877f22c606c5695e323c3e.js"
+  "/emnestigen/precache-manifest.108ec08fd4dc281accf7b966a73ce3c8.js"
 );
 
 self.addEventListener('message', (event) => {
