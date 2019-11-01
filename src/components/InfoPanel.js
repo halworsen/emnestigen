@@ -1,5 +1,5 @@
-import React from 'react';
-import data from "../data/course_data.json"
+import React from "react";
+import data from "../data/course_data.json";
 
 function CourseInput(props) {
 	return (
@@ -57,6 +57,7 @@ class InfoPanel extends React.Component {
 				className="infoPanel"
 			>
 				<hr/>
+
 				<div
 					key="infoPanelTitleBox"
 					className="titleBox"
@@ -64,7 +65,9 @@ class InfoPanel extends React.Component {
 					<CourseInput key="courseInput" value={this.props.activeCourse} onChange={this.props.onSearch}/>
 					<h3 key="courseInfoName" className="infoTitleName">{course_name}</h3>
 				</div>
+
 				<hr/>
+
 				<div
 					key="infoPanelInfoBox"
 					className="infoBox"

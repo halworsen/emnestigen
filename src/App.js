@@ -1,10 +1,9 @@
-import React from 'react';
-import './App.css';
-
-import CourseGraph from "./components/CourseGraph.js"
-import InfoPanel from "./components/InfoPanel.js"
-
-import appConfig from "./config/emnestigen_config.json"
+import React from "react";
+import "./App.css";
+import InteractiveCourseGraph from "./components/InteractiveCourseGraph.js";
+import GVCourseGraph from "./components/GraphVizCourseGraph.js";
+import InfoPanel from "./components/InfoPanel.js";
+import appConfig from "./config/emnestigen_config.json";
 
 class App extends React.Component {
     constructor(props) {
@@ -57,13 +56,14 @@ class App extends React.Component {
                     onSearch={(event) => this.onSearchUpdate(event)}
                 />
 
-                <CourseGraph
+                <InteractiveCourseGraph
                     key="courseGraph"
+                    activeCourse={this.state.activeCourse}
                     width={this.state.width}
                     height={this.state.height}
-                    activeCourse={this.state.activeCourse}
-                    onClickNode={(node) => this.onNodeSelected(node)}
+                    onClickNode={(id) => this.onNodeSelected(id)}
                 />
+
 
                 <div className="about">
                     <p>
@@ -71,7 +71,7 @@ class App extends React.Component {
                         <span> | </span>
                         <a
                             className="ghLink"
-                            href={appConfig.repository_url}
+                            href={appConfig.repositoryUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                         >
