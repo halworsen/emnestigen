@@ -73,7 +73,7 @@ class GVCourseGraph extends React.Component {
 			/>);
 		}
 
-		return (<div className="graphContainer">{content}</div>);
+		return content;
 	}
 }
 

@@ -10,6 +10,7 @@ html, body, #root {
   height: 100%;
 
   color: #191919;
+  background-color: #ecf0f1;
 }
 
 hr {
@@ -31,12 +32,15 @@ hr {
 
 /* Graph-specific styling */
 .graphContainer {
-  min-width: 100%;
   width: 100%;
-  min-height: 100%;
   height: 100%;
+}
 
-  background-color: #ecf0f1;
+@media(max-width: 1366px) {
+  .gvGraph {
+    max-width: 85%;
+    float: right;
+  }
 }
 
 /* The information panel, including the course code entry box */

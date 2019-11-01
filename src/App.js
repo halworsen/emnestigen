@@ -61,12 +61,14 @@ class App extends React.Component {
     }
 
     render() {
+        let graphClass = "graphContainer";
         let graph;
 
         if(this.state.graphType === "D3G") {
             graph = (
                 <InteractiveCourseGraph
                     key="courseGraph"
+                    className="d3gGraph"
                     activeCourse={this.state.activeCourse}
                     width={this.state.width}
                     height={this.state.height}
@@ -74,9 +76,11 @@ class App extends React.Component {
                 />
             );
         } else if(this.state.graphType === "GV") {
+            graphClass += " gvGraph";
             graph = (
                 <GVCourseGraph
                     key="courseGraph"
+                    className="gvGraph"
                     activeCourse={this.state.activeCourse}
                     width={this.state.width}
                     height={this.state.height}
@@ -92,7 +96,9 @@ class App extends React.Component {
                     onSearch={(event) => this.onSearchUpdate(event)}
                 />
 
-                {graph}
+                <div className={graphClass}>
+                    {graph}
+                </div>
 
                 <div
                     className="graphToggler"
