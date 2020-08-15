@@ -2,19 +2,21 @@
     create_courses.py
 """
 
-import pickle
+import json
+
 from course import Course
+
 
 def create_courses(file_name):
     """
-        Turns the given pickled file into course objects
+        Turns the given JSON file into course objects
 
         :param file_name: The file name containing all the course data
     """
 
     course_data = None
-    with open(file_name, "rb") as file:
-        course_data = pickle.load(file)
+    with open(file_name, "r") as file:
+        course_data = json.load(file)
 
     # Store the course objects in a dict for ease of access
     all_courses = {}
