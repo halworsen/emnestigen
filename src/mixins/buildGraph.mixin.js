@@ -20,7 +20,7 @@ const buildGraphMixin = {
 		let maxDepth = 0;
 
 		let queue = new Queue();
-		queue.enqueue({code: courseCode, depth: 0});
+		queue.enqueue({code: courseCode, data: data[courseCode], depth: 0});
 		while(!queue.isEmpty()) {
 			const course_node = queue.dequeue();
 
@@ -55,7 +55,7 @@ const buildGraphMixin = {
 					// Only explore the node if it hasn't been explored before
 					const been_explored = exploredNodes.some((node) => {return (node.code === otherCode);});
 					if(!been_explored) {
-						queue.enqueue({code: otherCode, depth: depth + 1});
+						queue.enqueue({code: otherCode, data: data[otherCode], depth: depth + 1});
 						maxDepth = Math.max(maxDepth, depth + 1);
 					}
 
@@ -75,7 +75,7 @@ const buildGraphMixin = {
 			// Have the class add the node to the graph data
 			// We do it here so we can do a gradual coloring of the nodes
 			// Neither Graphviz nor the interactive graph care about the order in which we add this information
-			this.addGraphNode(graphData, node.code, node.depth, maxDepth)
+			this.addGraphNode(graphData, node, maxDepth)
 		}
 
 		// Allow the class to "finish" the graph data somehow

@@ -13,7 +13,8 @@ class InteractiveCourseGraph extends React.Component {
 		super(props);
 
 		this.state = {
-			chosen_course: ""
+			chosen_course: "",
+			moverNode: undefined
 		};
 
 		// The depth at which the graph builder stops
@@ -43,10 +44,10 @@ class InteractiveCourseGraph extends React.Component {
 		graphData.links.push(linkData);
 	}
 
-	addGraphNode(graphData, code, depth, max_depth) {
+	addGraphNode(graphData, nodeData, max_depth) {
 		let depthFraction = 0;
 		if(max_depth > 0) {
-			depthFraction = depth / max_depth;
+			depthFraction = nodeData.depth / max_depth;
 		}
 
 		const startColor = appConfig.interactiveGraph.nodes.startColor;
@@ -58,10 +59,21 @@ class InteractiveCourseGraph extends React.Component {
 		const nodeSize = minSize + ((maxSize - minSize) * (1 - depthFraction));
 
 		graphData.nodes.push({
-			id: code,
+			owner: this,
+			id: nodeData.code,
+			courseName: nodeData.data.name,
 			size: nodeSize,
 			color: nodeColor
 		});
+	}
+
+	getNodeLabel(node) {
+		const moverNode = node.owner.state.moverNode;
+		if (node.id === moverNode) {
+			return node.courseName;
+		} else {
+			return node.id;
+		}
 	}
 
 	render() {
@@ -80,18 +92,25 @@ class InteractiveCourseGraph extends React.Component {
 		graphConfig.width = this.props.width;
 		graphConfig.height = this.props.height;
 
+		graphConfig.node.labelProperty = this.getNodeLabel;
+
 		let content = null;
 
 		// Only display the graph if its graph data was generated (which it will be if the raw data exists)
 		if(data[code]) {
-			content = (<Graph ref={this.graph}
-				key="interactiveCourseGraph"
-				id="course-dependencies"
-				data={graphData}
-				config={graphConfig}
-				onClickNode={this.props.onClickNode}
-				onDoubleClickNode={() => this.graph.current.resetNodesPositions()}
-			/>);
+			content = (
+				<Graph
+					ref={this.graph}
+					key="interactiveCourseGraph"
+					id="course-dependencies"
+					data={graphData}
+					config={graphConfig}
+					onClickNode={this.props.onClickNode}
+					onDoubleClickNode={() => this.graph.current.resetNodesPositions()}
+					onMouseOverNode={(id) => this.setState({moverNode: id})}
+					onMouseOutNode={() => this.setState({moverNode: undefined})}
+				/>
+			);
 		}
 
 		return content;
