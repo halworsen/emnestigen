@@ -24,17 +24,17 @@ class GVCourseGraph extends React.Component {
 		graphData.push(code + " -> " + otherCode + "[color=\"" + customConfig.color + "\"]\n");
 	}
 
-	addGraphNode(graphData, code, depth, max_depth) {
+	addGraphNode(graphData, nodeData, max_depth) {
 		let depthFraction = 0;
 		if(max_depth > 0) {
-			depthFraction = depth / max_depth;
+			depthFraction = nodeData.depth / max_depth;
 		}
 
 		const startColor = appConfig.interactiveGraph.nodes.startColor;
 		const endColor = appConfig.interactiveGraph.nodes.endColor;
 		const nodeColor = colorBetween(startColor, endColor, depthFraction, "hex");
 
-		graphData.push(code + "[color=\"" + nodeColor + "\"]");
+		graphData.push(nodeData.code + "[color=\"" + nodeColor + "\"]");
 	}
 
 	finalizeGraphData(graphData) {
