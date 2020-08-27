@@ -2,8 +2,10 @@ import React from "react";
 import "./App.css";
 import InteractiveCourseGraph from "./components/InteractiveCourseGraph.js";
 import GVCourseGraph from "./components/GraphVizCourseGraph.js";
-import InfoPanel from "./components/InfoPanel.js";
+import InfoPanel from "./components/InfoPanel/InfoPanel.js";
+import HistoryPanel from "./components/HistoryPanel/HistoryPanel.js";
 import appConfig from "./config/emnestigen_config.json";
+import data from "./data/course_data.json";
 
 class App extends React.Component {
     constructor(props) {
@@ -13,7 +15,8 @@ class App extends React.Component {
             width: 0,
             height: 0,
             graphType: "D3G",
-            activeCourse: ""
+            activeCourse: "",
+            history: []
         };
 
         this.updateSize = this.updateSize.bind(this);
@@ -21,30 +24,19 @@ class App extends React.Component {
 
     toggleGraphType() {
         const newType = (this.state.graphType === "D3G") ? "GV" : "D3G";
+
         this.setState({
-            width: this.state.width,
-            height: this.state.height,
-            graphType: newType,
-            activeCourse: this.state.activeCourse
+            graphType: newType
         })
     }
 
-    onSearchUpdate(event) {
+    updateActiveCourse(courseID) {
+        courseID = courseID.toUpperCase();
+
+        this.pushHistory(courseID);
         this.setState({
-            width: this.state.width,
-            height: this.state.height,
-            graphType: this.state.graphType,
-            activeCourse: event.target.value.toUpperCase()
+            activeCourse: courseID
         });
-    }
-
-    onNodeSelected(nodeId) {
-        this.setState({
-            width: this.state.width,
-            height: this.state.height,
-            graphType: this.state.graphType,
-            activeCourse: nodeId
-        })
     }
 
     componentDidMount() {
@@ -60,40 +52,65 @@ class App extends React.Component {
         });
     }
 
+    pushHistory(courseID) {
+        // Only push to history if its a valid course and its one that isn't already in history
+        const { history } = this.state;
+        if (!data[courseID] || history.includes(courseID)) {
+            return;
+        }
+
+        let updatedHistory = this.state.history;
+        updatedHistory.push(courseID);
+
+        while(updatedHistory.length > appConfig["maxHistoryLength"]) {
+            updatedHistory.shift();
+        }
+
+        this.setState({
+            history: updatedHistory
+        })
+    }
+
     render() {
+        const { activeCourse, width, height, graphType, history } = this.state;
         let graphClass = "graphContainer";
         let graph;
 
-        if(this.state.graphType === "D3G") {
+        if(graphType === "D3G") {
             graph = (
                 <InteractiveCourseGraph
                     key="courseGraph"
                     className="d3gGraph"
-                    activeCourse={this.state.activeCourse}
-                    width={this.state.width}
-                    height={this.state.height}
-                    onClickNode={(id) => this.onNodeSelected(id)}
+                    activeCourse={activeCourse}
+                    width={width}
+                    height={height}
+                    onClickNode={(courseID) => this.updateActiveCourse(courseID)}
                 />
             );
-        } else if(this.state.graphType === "GV") {
+        } else if(graphType === "GV") {
             graphClass += " gvGraph";
             graph = (
                 <GVCourseGraph
                     key="courseGraph"
                     className="gvGraph"
-                    activeCourse={this.state.activeCourse}
-                    width={this.state.width}
-                    height={this.state.height * 0.95}
+                    activeCourse={activeCourse}
+                    width={width}
+                    height={height * 0.95}
                 />
             );
         }
 
         return (
             <div key="appContainer" className="appContainer">
+                <HistoryPanel
+                    history={history}
+                    onHistoryClick={(courseID) => this.updateActiveCourse(courseID)}
+                />
+
                 <InfoPanel
                     key="infoPanel"
-                    activeCourse={this.state.activeCourse}
-                    onSearch={(event) => this.onSearchUpdate(event)}
+                    activeCourse={activeCourse}
+                    onSearch={(courseID) => this.updateActiveCourse(courseID)}
                 />
 
                 <div className={graphClass}>
@@ -104,7 +121,7 @@ class App extends React.Component {
                     className="graphToggler"
                     onClick={() => this.toggleGraphType()}
                 >
-                    <p>{this.state.graphType}</p>
+                    <p>{graphType}</p>
                 </div>
 
                 <div className="about">

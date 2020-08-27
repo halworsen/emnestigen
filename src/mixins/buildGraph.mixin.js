@@ -3,6 +3,7 @@ import data from "../data/course_data.json";
 
 const buildGraphMixin = {
 	// Tinkering has shown that 5 is a resonable depth to stop at
+	// The cutoff is to prevent infinite loops in cyclic graphs
 	depthCutoff: 5,
 
 	buildGraph(courseCode, linkingData) {

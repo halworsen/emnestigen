@@ -1,0 +1,52 @@
+.infoPanel {
+  position: absolute;
+
+  width: 30rem;
+  padding: 2rem;
+
+  border-radius: 0 0 1rem 0;
+
+  background-color: rgba(236, 240, 241, 0);
+
+  pointer-events: none;
+}
+
+/* Box containing the course code entry box and course name */
+.titleBox {
+  padding: .5rem;
+}
+
+/* Plaintext information about the course's recommended/required knowledge, in full */
+.infoBox {
+  padding: .5rem;
+  margin-top: .5rem;
+}
+
+/* Course code input form */
+.courseInputForm {
+  width: 30rem;
+  max-width: 30rem;
+  margin: 0;
+
+  pointer-events: visible;
+}
+
+/* The actual text input */
+.courseInputTextArea {
+  max-height: 1.35em;
+  border: none;
+  resize: none;
+  padding: 0;
+
+  background-color: rgba(236, 240, 241, 0);
+  font-size: 2em;
+  font-weight: bold;
+
+  white-space: nowrap;
+}
+
+/* Course name */
+.infoTitleName {
+  font-style: italic;
+  color: #494949;
+}

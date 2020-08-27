@@ -1,6 +1,7 @@
 {
 	"repositoryUrl": "https://github.com/halworsen/emnestigen",
 	"aboutBlurb": "Laga med ekte ❤️ av halworsen",
+	"maxHistoryLength": 5,
 
 	"interactiveGraph": {
 		"nodes": {
